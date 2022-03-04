@@ -1,0 +1,39 @@
+name: pinterest_clone_project
+description: A new Flutter project.
+
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.16.1 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+
+  cupertino_icons: ^1.0.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  http: ^0.13.04
+  flutter_staggered_grid_view: ^0.6.1
+  cached_network_image: ^3.2.0
+  dio: ^4.0.4
+  retrofit: ^3.0.1+1
+
+  flutter_lints: ^1.0.0
+
+flutter:
+
+  uses-material-design: true
+
+  assets:
+    - assets/images/
+  #   - images/a_dot_ham.jpeg
+
+  # An image asset can refer to one or more resolution-specific "variants", see
+  # https://flutter.dev/assets-and-images/#resolution-aware.
+
