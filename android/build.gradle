@@ -8,6 +8,8 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:4.1.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath 'com.google.gms:google-services:4.3.13'
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.9.1'
     }
 }
 
@@ -29,3 +31,5 @@ subprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.google.firebase.crashlytics'

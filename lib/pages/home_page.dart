@@ -6,12 +6,15 @@ import 'package:flutter/services.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:pinterest_clone_project/pages/profel_page.dart';
 import 'package:pinterest_clone_project/pages/search_page.dart';
+import 'package:pinterest_clone_project/service/deep_link/link.dart';
 import '../model/pinterist_model.dart';
 import '../service/network_service.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import '../service/scroliameg_service.dart';
 import 'datail_page.dart';
 import 'message_page.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -24,6 +27,7 @@ class _HomePageState extends State<HomePage> {
   late PainterisOblectList painterisOblectList;
   List<PainterisOblect> painterisOblects = [];
   String data = "";
+  String deepLink="No deepLink";
   int selectedIndex = 0;
   int _countLoadMore = 1;
   int pageSelctedindex = 0;
@@ -50,7 +54,6 @@ class _HomePageState extends State<HomePage> {
           .map((object) => object)
           .toList());
     });
-    print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
     print(painterisOblectList);
   }
 
@@ -82,6 +85,15 @@ class _HomePageState extends State<HomePage> {
         });
         _loadMore();
       }
+    });
+
+    LinkService.retrieveDynamicLink().then((value) =>deepLinkFunction(value.toString()) );
+  }
+
+  void deepLinkFunction(String text){
+    setState(() {
+      if(text !="null")
+      deepLink=text;
     });
   }
 
@@ -129,14 +141,16 @@ class _HomePageState extends State<HomePage> {
                   Container(
                     margin: EdgeInsets.only(bottom: 10),
                     height: 40,
-                    width: 60,
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(25),
                         color: Colors.black),
-                    child: Text(
-                      "All",
-                      style: TextStyle(fontSize: 25, color: Colors.white),
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Text(
+                        "All+$deepLink",
+                        style: TextStyle(fontSize: 25, color: Colors.white),
+                      ),
                     ),
                   ),
                   Expanded(
@@ -255,6 +269,7 @@ class _HomePageState extends State<HomePage> {
             ),
             IconButton(
               onPressed: () {
+                FirebaseCrashlytics.instance.crash();
                 setState(() {
                   pageSelctedindex = 0;
                 });

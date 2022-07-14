@@ -73,11 +73,59 @@ class _ScrolImageState extends State<ScrolImage> {
                       color: Colors.black),
                 ):SizedBox.shrink(),
               ),
-              Icon(Icons.more_horiz)
+              IconButton(onPressed: (){
+
+              }, icon: Icon(Icons.more_horiz) )
+
             ],
           )
         ],
       );
     }
+    Widget dropDownButton(
+        List<String> list, String value, void Function(String?) function) {
+      return Container(
+        height: 35,
+        color: Colors.white,
+        alignment: Alignment.center,
+        child: DropdownButtonHideUnderline(
+          child: DropdownButton<String>(
+            alignment: Alignment.center,
+            borderRadius: BorderRadius.circular(10),
+            isExpanded: true,
+            hint: Text(value,
+                style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w400,
+                    color: Colors.black)),
+            style: TextStyle(
+                fontSize: 18,
+                color: Colors.black,
+                fontFamily: "Poppins",
+                fontWeight: FontWeight.w500),
+            icon: const Icon(
+              Icons.keyboard_arrow_down,
+            ),
+            iconSize: 24,
+            onChanged: function,
+            items: list.map((String tag) {
+              return DropdownMenuItem<String>(
+                value: tag,
+                child: Text(
+                  tag,
+                  style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.black,
+                      fontFamily: "Poppins",
+                      fontWeight: FontWeight.w500),
+                ),
+              );
+            }).toList(),
+          ),
+        ),
+      );
+    }
+
+
   }
 

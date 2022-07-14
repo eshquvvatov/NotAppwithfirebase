@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:pinterest_clone_project/pages/search_page.dart';
+import 'package:pinterest_clone_project/service/deep_link/link.dart';
 import '../model/pinterist_model.dart';
 import '../service/network_service.dart';
 import '../service/scroliameg_service.dart';
@@ -81,7 +83,7 @@ class _DetailpageState extends State<Detailpage> {
     super.dispose();
     print("=================================================================");
     print(painterisOblects.length);
-   //painterisOblects.clear();
+    //painterisOblects.clear();
     _scrollController.dispose();
   }
 
@@ -229,7 +231,17 @@ class _DetailpageState extends State<Detailpage> {
 
                           //Spacer(),
                           IconButton(
-                              onPressed: () {},
+                              onPressed: () async {
+                                print(widget.oblect.id.toString());
+                                //String ok= LinkService.createShortLink("${widget.oblect.urls}").toString();
+                                String deepLink =
+                                    (await LinkService.createShortLink(
+                                            widget.oblect.id.toString()))
+                                        .toString();
+                                await Clipboard.setData(
+                                    ClipboardData(text: deepLink));
+                                print("tugadi");
+                              },
                               icon: Icon(
                                 Icons.share,
                                 color: Colors.black,
@@ -334,7 +346,7 @@ class _DetailpageState extends State<Detailpage> {
                   height: 20,
                 ),
                 MasonryGridView.count(
-                  padding: EdgeInsets.only(top: 1,right: 10,left: 10),
+                  padding: EdgeInsets.only(top: 1, right: 10, left: 10),
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   crossAxisCount: 2,
